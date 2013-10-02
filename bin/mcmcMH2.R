@@ -4,7 +4,7 @@ library(MCMCpack)
 
 
 
-source("c:/aftab/R/mcmc/config/mcmc.cfg")
+source("c:/aftab/R/mcmcMH/config/mcmc.cfg")
 source(paste(Home, "/data/parm/mcmcMH.in", sep = ''))
 
 #source(paste(Home, "/lib/impliedVolLib.R", sep = ''))
@@ -51,15 +51,15 @@ attach(HDOrdLn)
             mcmcSummary[[1]][[4]]*PSmaLn  + mcmcSummary[[1]][[5]]*VSmaLn +
             mcmcSummary[[1]][[6]]*BackPLn1  ) +  mcmcSummary[[1]][[1]] ) 
 
-  kk <- cbind(Dt,prnew, AheadP )
+  kk <- cbind(Dt,exp(prnew), exp(AheadP ))
 
 
 detach(HDOrdLn)
 
 # Test the model
-tt <-subset( kk,Dt < 20130910)
-a <-strptime(tt[,1], "%Y%m%d")
-b <- abs(tt[,2] - tt[,3])
+#tt <-subset( kk,Dt < 20130910)
+a <-strptime(kk[,1], "%Y%m%d")
+b <- kk[,3]
 cc <- data.frame(a,b)
 plot(cc)
 hist(cc[,2])
