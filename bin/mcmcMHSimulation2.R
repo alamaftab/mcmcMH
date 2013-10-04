@@ -1,7 +1,10 @@
 #### remove DatE from global env
 myDatE <- Dt
 rm(Dt)
+###paramenters#########
+futureNoOfDays = 20
 
+#######################
 dataCollect <- data.frame(Dt=0,predict = 0.0, realVal = 0.0)
 
 attach(HDOrdLn)
@@ -9,7 +12,7 @@ attach(HDOrdLn)
 for ( i in 1:30)
 {
   
-  for ( j in 100:221)
+  for ( j in 50:221)
    {
 
     
@@ -23,8 +26,9 @@ for ( i in 1:30)
 
       
      
-     for ( k in 1:20)
+     for ( k in 1:futureNoOfDays)
      {
+       randRow = sample(seq(1,futureNoOfDays),1)
        
        CofIncept = rnorm(1,mcmcSummary[[1]][[1]] ,mcmcSummary[[1]][[8]]/20)
        CofPLn = rnorm(1, mcmcSummary[[1]][[2]] ,mcmcSummary[[1]][[9]]/20)
@@ -37,12 +41,13 @@ for ( i in 1:30)
        prdictVal = (( CofPLn*tmpPLn +    CofVLn*tmpVLn  + CofPSmaLn*tmpPSmaLn  + CofVSmaLn*tmpVSmaLn + CofBackPLn1*tmpBackPLn1 ) +  CofIncept  ) 
        
        #print(exp(prdictVal))
-       CofBackPLn1 = tmpPLn
-       tmpPLn = log( exp(prdictVal) + 0.20*exp(prdictVal)*(  - rpois(1,.01) +  rpois(1,.08)) )
+       tmpBackPLn1 = tmpPLn
+#       tmpPLn = log( exp(prdictVal) + 0.20*exp(prdictVal)*(  - rpois(1,.01) +  rpois(1,.01)) )
+       tmpPLn = prdictVal
 #       tmpPLn = prdictVal 
+       tmpVLn = VLn[j+ 1 - randRow]
        tmpDt = Dt[j+k]
        tmpAheadP = AheadP[j+k]
-
 
        }   
      
@@ -56,11 +61,9 @@ a <-strptime(dataCollect[,1], "%Y%m%d")
 v <- data.frame(a,exp(dataCollect[,2]))
 v1 <- data.frame(a,exp(dataCollect[,3]))
 
-plot(v, ylim = c(5,12))
+plot(v, ylim = c(10,200))
 lines(v1, type="o", pch=22, lty=2, col="red")
-lines(aggregate(formula=v[,2]~v[,1],data=v,FUN=mean), pch=44, lty=26, col="green")
-#lines(aggregate(formula=v[,2]~v[,1],data=v,FUN="green"))
-#lines(aggregate(formula=v[,2]~v[,1],data=v,FUN="blue"))
+lines(aggregate(formula=v[,2]~v[,1],data=v,FUN=mean), pch=44, lty=26, col="blue")
 
 
 #abline(lm(dd[,2] ~ dd[,1]), lty=2)
