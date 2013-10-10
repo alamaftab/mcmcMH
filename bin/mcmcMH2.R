@@ -64,6 +64,7 @@ b <- kk[,3]
 cc <- data.frame(a,b)
 plot(cc)
 hist(cc[,2])
+mcmcSummary
 
 
 
