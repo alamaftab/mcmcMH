@@ -45,7 +45,7 @@ for ( i in 1:40)
       prdictVal = (( CofPLn*tmpPLn +    CofVLn*tmpVLn  + CofPSmaLn*tmpPSmaLn  + CofVSmaLn*tmpVSmaLn + CofBackPLn1*tmpBackPLn1 ) +  CofIncept  ) 
       tmpBackPLn1 = tmpPLn
       #tmpPLn =  prdictVal
-      tmpPLn = log( exp(prdictVal) + 0.08*exp(prdictVal)*(  + rpois(1,.02) -  rpois(1,.08)) )
+      tmpPLn = log( exp(prdictVal) + 0.02*exp(prdictVal)*(  + rpois(1,.02) -  rpois(1,.06)) )
       tmpVLn = VLn[j + 1 - randRow]
       
       ### Date logic for next future date###########
@@ -72,12 +72,12 @@ a <-strptime(dataCollect[,1], "%Y%m%d")
 v <- data.frame(a,exp(dataCollect[,2]))
 v1 <- data.frame(a,exp(dataCollect[,3]))
 
-plot(v, ylim = c(30,40))
+plot(v, ylim = c(80, 180))
 #lines(v1, type="o", pch=22, lty=2, col="red")
 lines(aggregate(formula=v[,2]~v[,1],data=v,FUN=mean), pch=44, lty=1,lwd = 4, col="green")
-abline(h=120)
+abline(h=130)
 #lines(aggregate(formula=v[,2]~v[,1],data=v,FUN="green"))
 #lines(aggregate(formula=v[,2]~v[,1],data=v,FUN="blue"))
-
+abline(h=134)
 
 #abline(lm(dd[,2] ~ dd[,1]), lty=2)

@@ -8,7 +8,7 @@ library(lubridate)
 source("c:/aftab/R/mcmcMH/config/mcmc.cfg")
 source(paste(Home, "/data/parm/mcmcMH.in", sep = ''))
 
-#source(paste(Home, "/lib/impliedVolLib.R", sep = ''))
+source(paste(Home, "/lib/mcmcMHLib.R", sep = ''))
 
 
 dataPathHist= histFile
@@ -18,6 +18,7 @@ histData <- read.table(dataPathHist,skip=0, header=F, sep="|")
 histDataOrd <- histData[ order(histData$V2), ]
 histDataRowCount = as.numeric(nrow(histData))
 histDataOrd
+histDataOrd <- dedupe.takeFirst(histDataOrd,2)
 
 
 SMAVolume20 <- c(0.0)
